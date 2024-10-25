@@ -1,0 +1,429 @@
+*{
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.main-body{
+  background-image: url('https://preview.redd.it/2jhtmqhg4mo81.png?width=1920&format=png&auto=webp&s=0d41709c3c478d2bcadfd8f2450271f175c0676f');
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-input{
+  border: none;
+  width: 70vw;
+  height: 10vh;
+  border-radius: 5rem;
+  text-align: center;
+  outline: none;
+  font-size: large;
+}
+
+.icon{
+  position: absolute;
+  left: 16%;
+  color: #17a2b8;
+}
+
+.container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.1rem;
+}
+
+.card{
+  margin: 0 10px;
+  height: 90%;
+  margin-bottom: 3.3rem;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 7px;
+  transition: transform 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+
+.cardImage{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: filter 0.3s;
+}
+
+
+.cardDetails {
+  position: absolute; 
+  top: 0; 
+  bottom: 0;
+  /* background-color: rgba(0, 0, 0, 0.6); */
+  color: white; 
+  display: flex;
+  flex-direction: column;
+  align-items: start; 
+  justify-content: space-around;
+  opacity: 0; 
+  transition: opacity 0.3s;
+  margin: 0 10%;
+}
+
+.card:hover {
+  transform: scale(1.02); 
+}
+
+.card:hover .cardImage {
+  filter: brightness(0.5); 
+}
+
+.card:hover .cardDetails {
+  opacity: 1; 
+}
+
+
+.cards-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.above-text{
+  display: flex;
+  justify-content: center;
+  margin-top: 7vh;
+  
+}
+
+.cards-text{
+  border-radius: 0.3rem;
+  background-color: #17a2b8;
+  box-shadow: .1rem .1rem .4rem #888;
+  color: white;
+  margin: 2%;
+  padding: 0.3% 0.8%;
+}
+
+.poster-sec {
+  height: 100vh;
+  width: 100%;
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  position: relative;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+.fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* z-index: -1; */
+  background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 70%); /* Gradient for fade effect */
+}
+
+.movie-details{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  position: relative; 
+  z-index: 2; 
+  text-align: left;
+  width: 65%;
+  padding: 2rem;
+  top: 4vh;
+}
+
+.title1 {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700; 
+  font-size: 4rem; 
+}
+
+.title {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700; 
+  font-size: 4rem; 
+  color: white;
+}
+
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.detail{
+  margin: 0.2rem;
+}
+
+.detail2{
+  margin-top: 1.5rem;
+}
+
+.movie-body-2{
+  display: none;
+}
+
+@media (max-width: 1035px) {
+  .movie-body-1{
+    display: none;
+  }
+
+  .movie-body-2{
+    display: block;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .title1{
+    font-size: 2rem;
+  }
+
+  .movie-card{
+    height: 30%;
+    width: 100%;
+    background-size: contain;
+    margin-top: 7vh;
+    overflow: hidden;
+  }
+  
+  .cardImage-movie{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .movie-details-1{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 0.5rem;
+  }
+}
+
+.signup-container{
+  background-image: url('https://grainger-prod.adobecqms.net/content/dam/grainger/gus/en/public/digital-tactics/know-how/hero/SS-KH_22-items-workplace-movie-night_KH-HRO.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.create-acc{
+  z-index: 2;
+  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+  color: white;
+  padding-right: 3.3rem;
+  font-weight: bolder;
+}
+
+.create-acc1{
+  z-index: 2;
+  color: white;
+  padding-right: 3.3rem;
+}
+
+.signup-form{
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.3rem;
+  width: 35%;
+  height: 75%;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 2;
+  margin-right: 4rem;
+}
+
+.signin-form{
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.3rem;
+  width: 30%;
+  height: 55%;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 2;
+  margin-right: 4rem;
+}
+
+.signup-input{
+  border-radius: 2rem;
+  background-color: white;
+  width: 95%;
+  border-color: #17a2b8;
+  height: 6%;
+  padding: 1rem;
+}
+
+.name-field{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.signup-names-first{
+  border-color: #17a2b8;
+  border-radius: 2rem;
+  height: 1.6rem;
+  padding: 1rem;
+  width: 41%;
+}
+.signup-names-last{
+  border-color: #17a2b8;
+  border-radius: 2rem;
+  height: 1.6rem;
+  padding: 1rem;
+  width: 41%;
+}
+
+.signup-button{
+  width: 90%;
+  height: 3rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: #17a2b8;
+  color: white;
+}
+
+.fade1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%); 
+}
+
+
+
+@media (max-width: 880px) {
+  .fade1 {
+    display: none; 
+  }
+
+
+  .signup-container {
+    background-image: url('https://grainger-prod.adobecqms.net/content/dam/grainger/gus/en/public/digital-tactics/know-how/hero/SS-KH_22-items-workplace-movie-night_KH-HRO.jpg');
+    background-size: cover; 
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signin-form, .signup-form {
+    width: 40%;
+    margin-right: 0;
+  }
+}
+
+.nav-container {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #17a2b8;
+  height: 7vh;
+}
+
+.main-nav-container {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; 
+  color: white; 
+}
+
+.list {
+  display: flex;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin: 1rem;
+}
+
+.logo1 {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.user {
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-button {
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) { 
+  .navbar-button {
+    display: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .card {
+    margin: 0.5rem;
+    height: auto;
+  }
+
+  .cardImage {
+    height: auto;
+  }
+
+  .cardDetails {
+    padding: 0.5rem;
+  }
+
+  .cards-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    margin: 0.3rem;
+  }
+
+  .cards-text {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .cardDetails {
+    padding: 0.3rem;
+  }
+}
+
