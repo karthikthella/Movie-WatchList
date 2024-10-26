@@ -371,6 +371,7 @@
 }
 
 .logo1 {
+  cursor: pointer;
   display: flex;
   gap: 0.3rem;
 }

@@ -6,19 +6,16 @@ import { Videocam as VideocamIcon, Menu as MenuIcon, Person as PersonIcon } from
 const Navbar = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-    const [menuAnchorEl, setMenuAnchorEl] = useState(null);
     const [userAnchorEl, setUserAnchorEl] = useState(null);
 
     const handleClickWatchlist = () => navigate("/watchlist");
+    const handleClickIcon = () => navigate("/main");
     const handleClickWatched = () => navigate("/watched");
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/');
         handleCloseUserMenu();
     };
-
-    const handleMenuClick = (event) => setMenuAnchorEl(event.currentTarget);
-    const handleCloseMenu = () => setMenuAnchorEl(null);
 
     const handleUserIconClick = (event) => setUserAnchorEl(event.currentTarget);
     const handleCloseUserMenu = () => setUserAnchorEl(null);
@@ -27,7 +24,7 @@ const Navbar = () => {
         <div className='main-nav-container'>
             <div className="nav-container">
                 <div className="logo">
-                    <div className="logo1">
+                    <div className="logo1" onClick={handleClickIcon}>
                         <VideocamIcon />
                         <p>WatchNow</p>
                     </div>
