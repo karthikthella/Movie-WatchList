@@ -4,10 +4,19 @@ import { Typography, CircularProgress, Button, Rating, Box, IconButton } from '@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import Navbar from './Navbar';
 import Tooltip from '@mui/material/Tooltip';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Movie = () => {
   const [movie, setMovie] = useState(null);
   const { id } = useParams();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const fetchMovie = async (id) => {
     const url = `https://streaming-availability.p.rapidapi.com/shows/${id}?series_granularity=episode&output_language=en`;
@@ -56,7 +65,7 @@ const Movie = () => {
     };
     
     try {
-      const response = await fetch('http://localhost:5000/api/user/watchlist', {
+      const response = await fetch('https://server-sandy-eta-92.vercel.app/api/user/watchlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,11 +76,11 @@ const Movie = () => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Error: ${errorData.error}`); // Show error message
+        handleSnackbarOpen(`Error: ${errorData.error}`);
         return;
       }
       const data = await response.json();
-      alert(data.message); // Show success message
+      handleSnackbarOpen('Movie added to watchlist'); 
     } catch (error) {
       console.error('Error while adding to watchlist:', error);
     }
@@ -83,6 +92,18 @@ const Movie = () => {
       return `${words.slice(0, 50).join(' ')}... more`;
     }
     return description;
+  };
+
+  const handleSnackbarOpen = (message) => {
+    setSnackbarMessage(message);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   useEffect(() => {
@@ -114,15 +135,15 @@ const Movie = () => {
           <p className="description detail">{truncateDescription(movie.overview)}</p>
           <div className="buttons detail2">
             <p>Watch Now</p>
-            <Box sx={{ display: 'flex', gap: 1 }}>
+            <Box sx={{ display: 'flex', gap: 1, padding: '0.5rem 0'}}>
               {movie.streamingOptions?.in?.map((option, index) => (
                 <Button key={index} href={option.link} className='button' target="_blank" variant='contained' sx={{ borderRadius: '2rem', margin: '1rem 0', backgroundColor: '#17a2b8'}}>
                   {option.service.name}
                 </Button>
               ))}
             </Box>  
+            <Tooltip title="Add to Watchlist" arrow><Button className='button-watch' sx={{color: 'white', backgroundColor: '#17a2b8', borderRadius: '2rem'}} aria-label='add to watchlist' onClick={(e) =>{ e.stopPropagation(); addToWatchlist(movie); }} startIcon={<AddToQueueIcon/>}>Add to Watchlist</Button></Tooltip>
           </div>
-          <Tooltip title="Add to Watchlist" arrow><Button className='button-watch' sx={{color: 'white', backgroundColor: '#17a2b8', borderRadius: '2rem'}} aria-label='add to watchlist' onClick={(e) =>{ e.stopPropagation(); addToWatchlist(movie); }} startIcon={<AddToQueueIcon/>}>Add to Watchlist</Button></Tooltip>
 
         </div>
 
@@ -159,6 +180,21 @@ const Movie = () => {
 
 
     </div>
+
+    <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} 
+        open={snackbarOpen}
+        autoHideDuration={5000} 
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ 
+      width: '100%', 
+      backgroundColor: '#17a2b8', 
+      color: 'white' 
+    }} >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

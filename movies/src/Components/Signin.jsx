@@ -9,16 +9,18 @@ const Signin = () => {
 
   const handleSignin = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:5000/api/auth/signin', {
+    const response = await fetch('https://server-sandy-eta-92.vercel.app/api/auth/signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
+
     });
 
     const data = await response.json();
+    console.log(data);
     if (response.ok) {
       localStorage.setItem('token', data.token);
-      alert('Signin successful!');
+
       navigate('/main');
     } else {
       alert(data.error);

@@ -2,21 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import QueueIcon from '@mui/icons-material/Queue';
 import RemoveFromQueueIcon from '@mui/icons-material/RemoveFromQueue';
 import Navbar from './Navbar';
 import Tooltip from '@mui/material/Tooltip';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
 const Watched = () => {
     const [watched, setWatched] = useState([]);
     const [error, setError] = useState(null);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchWatched = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/user/watched', {
+                const response = await fetch('https://server-sandy-eta-92.vercel.app/api/user/watched', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -47,7 +55,7 @@ const Watched = () => {
 
     const removeFromWatched = async (movieId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/user/watched/${movieId}`, {
+            const response = await fetch(`https://server-sandy-eta-92.vercel.app/api/user/watched/${movieId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,11 +69,24 @@ const Watched = () => {
 
             // Update the watchlist locally after successful removal
             setWatched((prevWatched) => prevWatched.filter((movie) => movie.id !== movieId));
+            handleSnackbarOpen('Movie removed from watched');
         } catch (error) {
             console.error('Error removing movie from watched:', error);
             setError('Failed to remove movie');
         }
     };
+
+    const handleSnackbarOpen = (message) => {
+        setSnackbarMessage(message);
+        setSnackbarOpen(true);
+      };
+    
+      const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setSnackbarOpen(false);
+      };
 
 
     return (
@@ -108,6 +129,21 @@ const Watched = () => {
                 )}
             </div>
         </div>
+
+        <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} 
+        open={snackbarOpen}
+        autoHideDuration={5000} 
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ 
+      width: '100%', 
+      backgroundColor: '#17a2b8', 
+      color: 'white' 
+    }} >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
         </>
     );
 };

@@ -5,9 +5,19 @@ import QueueIcon from '@mui/icons-material/Queue';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import Tooltip from '@mui/material/Tooltip';
 import Navbar from './Navbar';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { useState } from 'react';
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const MovieCards = ({ text, movies }) => {
   const navigate = useNavigate();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const handleCardClick = (movieId) => {
     navigate(`/movie/${movieId}`);
@@ -16,7 +26,7 @@ const MovieCards = ({ text, movies }) => {
 
   const removeFromWatchlist = async (movieId) => {
     try {
-        const response = await fetch(`http://localhost:5000/api/user/watchlist/${movieId}`, {
+        const response = await fetch(`https://server-sandy-eta-92.vercel.app/api/user/watchlist/${movieId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -50,7 +60,7 @@ const MovieCards = ({ text, movies }) => {
     };
     
     try {
-      const response = await fetch('http://localhost:5000/api/user/watched', {
+      const response = await fetch('https://server-sandy-eta-92.vercel.app/api/user/watched', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,12 +71,12 @@ const MovieCards = ({ text, movies }) => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Error: ${errorData.error}`); 
+        handleSnackbarOpen(`Error: ${errorData.error}`); 
         return;
       }
       const data = await response.json();
-      alert(data.message);
       removeFromWatchlist(movie.imdbId);
+      handleSnackbarOpen('Movie added to watched'); 
     } catch (error) {
       console.error('Error while adding to watched:', error);
     }
@@ -86,7 +96,7 @@ const MovieCards = ({ text, movies }) => {
     };
     
     try {
-      const response = await fetch('http://localhost:5000/api/user/watchlist', {
+      const response = await fetch('https://server-sandy-eta-92.vercel.app/api/user/watchlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,14 +107,26 @@ const MovieCards = ({ text, movies }) => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Error: ${errorData.error}`); // Show error message
+        handleSnackbarOpen(`Error: ${errorData.error}`);
         return;
       }
       const data = await response.json();
-      alert(data.message); // Show success message
+      handleSnackbarOpen('Movie added to watchlist'); 
     } catch (error) {
       console.error('Error while adding to watchlist:', error);
     }
+  };
+
+  const handleSnackbarOpen = (message) => {
+    setSnackbarMessage(message);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
   
   
@@ -138,6 +160,22 @@ const MovieCards = ({ text, movies }) => {
               ))}
         </div>
       </div>
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} 
+        open={snackbarOpen}
+        autoHideDuration={5000} 
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} sx={{ 
+      width: '100%', 
+      backgroundColor: '#17a2b8', 
+      color: 'white' 
+    }} 
+    variant="filled">
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       </>
   )
 }
