@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 
 
+
 const Main = ({ onSearch }) => {
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
+  const handleClickText = () => navigate("/ai-suggestions");
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       onSearch(searchText);
@@ -24,6 +26,9 @@ const Main = ({ onSearch }) => {
     <div className='main-body'>
         <SearchIcon className='icon' />
         <input placeholder='Search for Movies..'  className='main-input' value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyDown={handleKeyDown} />
+        <div className="movie-sugg-text">
+         <a onClick={handleClickText}>Not sure what to watch? Ask Gemini.</a>
+        </div>
     </div>
     </>
   )

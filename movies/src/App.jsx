@@ -8,6 +8,7 @@ import Signin from './Components/Signin';
 import Signup from './Components/Signup';
 import Watchlist from './Components/Watchlist';
 import Watched from './Components/Watched';
+import AiSuggestion from './Components/AiSuggestion';
 function App() {
 
   const [input, setInput] = useState("");
@@ -21,8 +22,8 @@ function App() {
     const options = {
       method: 'GET',
       headers: {
-        'x-rapidapi-key': 'fe82a9bf7cmsh9bca3960c178f61p13b0a7jsn28a7bdc46152',
-        'x-rapidapi-host': 'streaming-availability.p.rapidapi.com',
+        'x-rapidapi-key': import.meta.env.VITE_STREAMING_AVAILABILITY_API_KEY,
+		    'x-rapidapi-host': 'streaming-availability.p.rapidapi.com'
       },
     };
 
@@ -62,6 +63,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/' element={<Signin />} />
         <Route path='/watchlist' element={<Watchlist />} />
+        <Route path='/ai-suggestions' element={<AiSuggestion />} />
         <Route path='/watched' element={<Watched />} />
       </Routes>
     </BrowserRouter>

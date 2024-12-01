@@ -10,9 +10,13 @@
   height: 100vh;
   width: 100vw;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center align items horizontally */
+  justify-content: center; /* Center align items vertically */
+  text-align: center; /* Center align text inside each element */
 }
+
+
 
 .main-input{
   border: none;
@@ -22,11 +26,13 @@
   text-align: center;
   outline: none;
   font-size: large;
+  margin-bottom: 0.4rem; /* Add space below the input */
 }
 
 .icon{
   position: absolute;
   left: 16%;
+  top: 44.5%;
   color: #17a2b8;
 }
 
@@ -34,6 +40,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 0.1rem;
+}
+
+.movie-sugg-text{
+  color: white;
+  background-color: #17a2b8;
+  padding: 0.15rem 0.4rem;
+  border-radius: 7px;
+  cursor: pointer;
 }
 
 .card{
@@ -94,6 +108,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.filter-body{
+  margin-top: 10vh;
 }
 
 
@@ -307,6 +325,8 @@
   color: white;
 }
 
+
+
 .fade1 {
   position: absolute;
   top: 0;
@@ -428,3 +448,68 @@
   }
 }
 
+.filter-input{
+  border-radius: 2rem;
+  background-color: white;
+  border-color: #17a2b8;
+  height: 10%;
+  padding: 1rem;
+}
+
+.filter-field{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1rem;
+}
+
+.filter-body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filter-button{
+  width: 10%;
+  height: 2rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: #17a2b8;
+  color: white;
+  font-size: large;
+  margin-top: 1rem;
+}
+
+.filter-button:hover {
+  background-color: #19b8d0;
+}
+
+.movie-sugg-container{
+  border: 1px solid black;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background-color: #f4f8f9;
+}
+
+.divider {
+  border-bottom: 1px solid rgba(103, 212, 228, 0.7); /* Semi-transparent line */
+  margin: 0.5rem 0;
+  width: 60rem;
+}
+
+.movie-sugg{
+  margin: 1rem 0;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: font-size 0.3s ease;
+}
+
+.movie-sugg:hover{
+  font-size: 1.15rem;
+}

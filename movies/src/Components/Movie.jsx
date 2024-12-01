@@ -23,8 +23,8 @@ const Movie = () => {
     const options = {
       method: 'GET',
       headers: {
-        'x-rapidapi-key': '66cb15bb2fmsh19b35ad58b7f7e5p1a045bjsnf19c174d6efb',
-        'x-rapidapi-host': 'streaming-availability.p.rapidapi.com',
+        'x-rapidapi-key': import.meta.env.VITE_STREAMING_AVAILABILITY_API_KEY,
+		    'x-rapidapi-host': 'streaming-availability.p.rapidapi.com'
       },
     };
 
@@ -137,8 +137,8 @@ const Movie = () => {
             <p>Watch Now</p>
             <Box sx={{ display: 'flex', gap: 1, padding: '0.5rem 0'}}>
               {movie.streamingOptions?.in?.map((option, index) => (
-                <Button key={index} href={option.link} className='button' target="_blank" variant='contained' sx={{ borderRadius: '2rem', margin: '1rem 0', backgroundColor: '#17a2b8'}}>
-                  {option.service.name}
+                <Button key={index} href={option.link} className='button' target="_blank" variant='contained' sx={{ borderRadius: '2rem', margin: '1rem 0', backgroundColor: '#17a2b8', width: '150px', height: '40px', padding:'0'}}>
+                  <img className='service-img' src={option.service.imageSet.darkThemeImage} alt={option.service.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                 </Button>
               ))}
             </Box>  
