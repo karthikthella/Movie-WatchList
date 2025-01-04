@@ -27,11 +27,11 @@ const Signup = () => {
     }
   
     const data = await response.json(); 
-    navigate('/');
+    navigate('/signin');
   };
 
   const handleSignInClick = () => {
-    navigate('/');
+    navigate('/signin');
   };
 
   return (

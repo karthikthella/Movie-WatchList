@@ -9,6 +9,7 @@ import Signup from './Components/Signup';
 import Watchlist from './Components/Watchlist';
 import Watched from './Components/Watched';
 import AiSuggestion from './Components/AiSuggestion';
+import Watch from './Components/Watch';
 function App() {
 
   const [input, setInput] = useState("");
@@ -57,14 +58,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/main' element={<Main onSearch={ handleSearch }/>} />
+        <Route path='/' element={<Main onSearch={ handleSearch }/>} />
         <Route path='/movielist' element={<MovieCards text={ input } movies={ movies }/>} />
         <Route path='/movie/:id' element={<Movie />} />
         <Route path='/signup' element={<Signup />} />
-        <Route path='/' element={<Signin />} />
+        <Route path='/signin' element={<Signin />} />
         <Route path='/watchlist' element={<Watchlist />} />
         <Route path='/ai-suggestions' element={<AiSuggestion />} />
         <Route path='/watched' element={<Watched />} />
+        <Route path='/watch/:id' element={<Watch />} />
       </Routes>
     </BrowserRouter>
   )

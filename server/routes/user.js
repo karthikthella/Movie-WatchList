@@ -26,7 +26,7 @@ const authenticateToken = (req, res, next) => {
         const userId = req.user.id;
         const { id, title, rating, genres, cast, image, year } = req.body;
 
-        console.log("Incoming data:", req.body);
+        console.log(req.body);
 
         if (!title) {
             return res.status(400).json({ error: 'Title is required' });

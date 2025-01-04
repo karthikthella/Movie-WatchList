@@ -6,17 +6,25 @@ import Navbar from './Navbar';
 import Tooltip from '@mui/material/Tooltip';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import { useNavigate } from 'react-router-dom';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+
 
 const Movie = () => {
   const [movie, setMovie] = useState(null);
   const { id } = useParams();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const navigate = useNavigate();
+
+  const handleWatchClick = (movieId) => {
+    navigate(`/watch/${id}`);
+  };
 
   const fetchMovie = async (id) => {
     const url = `https://streaming-availability.p.rapidapi.com/shows/${id}?series_granularity=episode&output_language=en`;
@@ -129,20 +137,28 @@ const Movie = () => {
         <div className="fade"></div>
         <div className="movie-details" style={{ zIndex: 2 }}>
           <div className="titleandbutton"><p className="title detail">{movie.title}</p></div>
-          <p className="year detail">{movie.releaseYear}&nbsp;&nbsp;&nbsp;&nbsp;{movie.genres?.map(genre => genre.name).join(' | ')}&nbsp;&nbsp;&nbsp;&nbsp;{convertRuntime(movie.runtime)}</p>
+          {movie.showType === 'series' ? (
+              <p className="year detail">{movie.genres?.map(genre => genre.name).join(' | ')}&nbsp;&nbsp;&nbsp;&nbsp;{movie.seasonCount} {movie.seasonCount > 1 ? 'Seasons' : 'Season'}</p>
+            ) : (
+              <p className="year detail">{movie.releaseYear}&nbsp;&nbsp;&nbsp;&nbsp;{movie.genres?.map(genre => genre.name).join(' | ')}&nbsp;&nbsp;&nbsp;&nbsp;{convertRuntime(movie.runtime)}</p>
+            )}
           <p className='genres detail'><strong>Cast: </strong>{movie.cast?.map(actor => actor).join(', ')}</p>
           <Rating name="half-rating-read" defaultValue={movie.rating/100 * 5} precision={0.1} readOnly />
           <p className="description detail">{truncateDescription(movie.overview)}</p>
           <div className="buttons detail2">
-            <p>Watch Now</p>
             <Box sx={{ display: 'flex', gap: 1, padding: '0.5rem 0'}}>
               {movie.streamingOptions?.in?.map((option, index) => (
-                <Button key={index} href={option.link} className='button' target="_blank" variant='contained' sx={{ borderRadius: '2rem', margin: '1rem 0', backgroundColor: '#17a2b8', width: '150px', height: '40px', padding:'0'}}>
+                <Button key={index} href={option.link} className='button' target="_blank" variant='contained' sx={{ borderRadius: '2rem', margin: '0.1rem 0', backgroundColor: '#17a2b8', width: '150px', height: '40px', padding:'0'}}>
                   <img className='service-img' src={option.service.imageSet.darkThemeImage} alt={option.service.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                 </Button>
               ))}
-            </Box>  
+            </Box> 
+            <div className="buttons detail3">
+            <Box sx={{ display: 'flex', gap: 1, padding: '0.5rem 0'}}>
             <Tooltip title="Add to Watchlist" arrow><Button className='button-watch' sx={{color: 'white', backgroundColor: '#17a2b8', borderRadius: '2rem'}} aria-label='add to watchlist' onClick={(e) =>{ e.stopPropagation(); addToWatchlist(movie); }} startIcon={<AddToQueueIcon/>}>Add to Watchlist</Button></Tooltip>
+            <Tooltip title="Watch now" arrow><Button className='button-watch' sx={{color: 'white', backgroundColor: '#17a2b8', borderRadius: '2rem'}} aria-label='watch now' onClick={(e) =>{ e.stopPropagation(); handleWatchClick(movie.imdbId); }} startIcon={<PlayArrowIcon />}>Watch Now</Button></Tooltip>
+            </Box>
+            </div> 
           </div>
 
         </div>
@@ -161,12 +177,15 @@ const Movie = () => {
       </div>
       <div className="movie-details-1">
           <p className="title1 detail-min">{movie.title}</p>
-          <p className="year detail-min">{movie.releaseYear}&nbsp;&nbsp;&nbsp;&nbsp;{movie.genres?.map(genre => genre.name).join(' | ')}&nbsp;&nbsp;&nbsp;&nbsp;{convertRuntime(movie.runtime)}</p>
+          {movie.showType === 'series' ? (
+              <p className="year detail">{movie.genres?.map(genre => genre.name).join(' | ')}&nbsp;&nbsp;&nbsp;&nbsp;{movie.seasonCount} {movie.seasonCount > 1 ? 'Seasons' : 'Season'}</p>
+            ) : (
+              <p className="year detail">{movie.releaseYear}&nbsp;&nbsp;&nbsp;&nbsp;{movie.genres?.map(genre => genre.name).join(' | ')}&nbsp;&nbsp;&nbsp;&nbsp;{convertRuntime(movie.runtime)}</p>
+            )}
           <p className='genres detail-min'><strong>Cast: </strong>{movie.cast?.map(actor => actor).join(', ')}</p>
           <Rating name="half-rating-read" defaultValue={movie.rating/100 * 5} precision={0.1} readOnly />
           <p className="description detail">{truncateDescription(movie.overview)}</p>
           <div className="buttons detail2">
-            <p>Watch Now</p>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, padding: '0.3rem' }}>
               {movie.streamingOptions?.in?.map((option, index) => (
                 <Button key={index} href={option.link} className='button' target="_blank" variant='contained' sx={{ borderRadius: '2rem', margin: '1rem 0', backgroundColor: '#17a2b8'}}>
@@ -175,7 +194,12 @@ const Movie = () => {
               ))}
             </Box>  
           </div>
-          <Tooltip title="Add to Watchlist" arrow><Button className='button-watch' sx={{color: 'white', backgroundColor: '#17a2b8', borderRadius: '2rem'}} aria-label='add to watchlist' onClick={(e) =>{ e.stopPropagation(); addToWatchlist(movie); }} startIcon={<AddToQueueIcon/>}>Add to Watchlist</Button></Tooltip>
+          <div className="buttons detail2">
+            <Box sx={{ display: 'flex', gap: 1, padding: '0.5rem 0'}}>
+            <Tooltip title="Add to Watchlist" arrow><Button className='button-watch' sx={{color: 'white', backgroundColor: '#17a2b8', borderRadius: '2rem'}} aria-label='add to watchlist' onClick={(e) =>{ e.stopPropagation(); addToWatchlist(movie); }} startIcon={<AddToQueueIcon/>}>Add to Watchlist</Button></Tooltip>
+            <Tooltip title="Watch now" arrow><Button className='button-watch' sx={{color: 'white', backgroundColor: '#17a2b8', borderRadius: '2rem'}} aria-label='watch now' onClick={(e) =>{ e.stopPropagation(); handleWatchClick(movie.imdbId); }} startIcon={<PlayArrowIcon />}>Watch Now</Button></Tooltip>
+            </Box>
+            </div> 
       </div>
 
 

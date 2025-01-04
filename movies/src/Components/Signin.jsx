@@ -1,11 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Typography } from '@mui/material';
+import { jwtDecode } from 'jwt-decode';
+
+const checkTokenExpiration = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return false;
+
+  try {
+    const decodedToken = jwtDecode(token);  // Decode the JWT token
+    const currentTime = Date.now() / 1000;  // Current time in seconds
+    if (decodedToken.exp < currentTime) {
+      // Token has expired
+      localStorage.removeItem('token');  // Remove expired token
+      return false;
+    }
+    return true;  // Token is still valid
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return false;
+  }
+};
 
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!checkTokenExpiration()) {
+      navigate('/signin');
+    }
+  }, [navigate]);
 
   const handleSignin = async (e) => {
     e.preventDefault();
@@ -21,7 +47,7 @@ const Signin = () => {
     if (response.ok) {
       localStorage.setItem('token', data.token);
 
-      navigate('/main');
+      navigate('/');
     } else {
       alert(data.error);
     }

@@ -9,7 +9,7 @@ const Navbar = () => {
     const [userAnchorEl, setUserAnchorEl] = useState(null);
 
     const handleClickWatchlist = () => navigate("/watchlist");
-    const handleClickIcon = () => navigate("/main");
+    const handleClickIcon = () => navigate("/");
     const handleClickWatched = () => navigate("/watched");
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -47,7 +47,7 @@ const Navbar = () => {
                             </Menu>
                         </>
                     ) : (
-                        <Button variant='outlined' size='small' sx={{ backgroundColor: 'white', color: '#17a2b8' }} onClick={() => navigate('/')}>Login</Button>
+                        <Button variant='outlined' size='small' sx={{ backgroundColor: 'white', color: '#17a2b8' }} onClick={() => navigate('/signin')}>Login</Button>
                     )}
                 </div>
             </div>
