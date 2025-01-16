@@ -10,6 +10,7 @@ import Watchlist from './Components/Watchlist';
 import Watched from './Components/Watched';
 import AiSuggestion from './Components/AiSuggestion';
 import Watch from './Components/Watch';
+
 function App() {
 
   const [input, setInput] = useState("");
@@ -67,6 +68,7 @@ function App() {
         <Route path='/ai-suggestions' element={<AiSuggestion />} />
         <Route path='/watched' element={<Watched />} />
         <Route path='/watch/:id' element={<Watch />} />
+       
       </Routes>
     </BrowserRouter>
   )

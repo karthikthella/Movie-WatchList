@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import QueueIcon from '@mui/icons-material/Queue';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RemoveFromQueueIcon from '@mui/icons-material/RemoveFromQueue';
 import Navbar from './Navbar';
 import Tooltip from '@mui/material/Tooltip';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -18,6 +20,7 @@ const Watchlist = () => {
   const [error, setError] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+ 
 
   const navigate = useNavigate();
 
@@ -28,7 +31,7 @@ const Watchlist = () => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}` 
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
 
@@ -36,8 +39,8 @@ const Watchlist = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json(); 
-        setWatchlist(data.watchlist); 
+        const data = await response.json();
+        setWatchlist(data.watchlist);
       } catch (error) {
         console.error('Error fetching watchlist:', error);
         setError(error.message);
@@ -57,7 +60,7 @@ const Watchlist = () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` 
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
 
@@ -96,12 +99,12 @@ const Watchlist = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        handleSnackbarOpen(`Error: ${errorData.error}`); 
+        handleSnackbarOpen(`Error: ${errorData.error}`);
         return;
       }
       const data = await response.json();
       removeFromWatchlist(movie.id);
-      handleSnackbarOpen('Movie added to watched'); 
+      handleSnackbarOpen('Movie added to watched');
     } catch (error) {
       console.error('Error while adding to watched:', error);
     }
@@ -118,6 +121,8 @@ const Watchlist = () => {
     }
     setSnackbarOpen(false);
   };
+
+
 
   return (
     <>
@@ -157,6 +162,7 @@ const Watchlist = () => {
                         <QueueIcon />
                       </IconButton>
                     </Tooltip>
+                    
                   </div>
                 </div>
               </div>
@@ -166,16 +172,16 @@ const Watchlist = () => {
       </div>
 
       <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         open={snackbarOpen}
-        autoHideDuration={5000} 
+        autoHideDuration={5000}
         onClose={handleSnackbarClose}
       >
         <Alert onClose={handleSnackbarClose} severity="success" sx={{ 
-      width: '100%', 
-      backgroundColor: '#17a2b8', 
-      color: 'white' 
-    }} >
+          width: '100%', 
+          backgroundColor: '#17a2b8', 
+          color: 'white' 
+        }} >
           {snackbarMessage}
         </Alert>
       </Snackbar>

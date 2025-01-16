@@ -30,7 +30,7 @@ const MovieCards = ({ text, movies }) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming JWT token in localStorage
+                'Authorization': `Bearer ${localStorage.getItem('token')}` 
             }
         });
 
@@ -38,7 +38,6 @@ const MovieCards = ({ text, movies }) => {
             throw new Error('Failed to remove movie from watchlist');
         }
 
-        // Update the watchlist locally after successful removal
         setWatchlist((prevWatchlist) => prevWatchlist.filter((movie) => movie.id !== movieId));
     } catch (error) {
         console.error('Error removing movie from watchlist:', error);

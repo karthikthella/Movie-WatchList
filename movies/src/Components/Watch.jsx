@@ -10,7 +10,7 @@ const Watch = () => {
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [url, setUrl] = useState("");
-  const [selectedService, setSelectedService] = useState("vidsrc"); // Set Vidsrc as the default service
+  const [selectedService, setSelectedService] = useState("vidsrc");
 
   const fetchMovie = async (id) => {
     const url = `https://streaming-availability.p.rapidapi.com/shows/${id}?series_granularity=episode&output_language=en`;
@@ -62,7 +62,6 @@ const Watch = () => {
     }
   }, [movie]);
 
-  // Handle service change
   const handleServiceClick = (service) => {
     setSelectedService(service);
     const baseUrls = {
@@ -80,7 +79,6 @@ const Watch = () => {
       }
     };
 
-    // Set the URL for the movie or series depending on selected service
     if (movie?.showType === 'series') {
       setUrl(baseUrls[service].series);
     } else {
@@ -170,7 +168,7 @@ const Watch = () => {
             <p className="description detail">{truncateDescription(movie.overview)}</p>
             <div className="buttons detail2">
               <Box sx={{ display: 'flex', gap: 1, padding: '0.5rem 0' }}>
-                {/* Service Buttons */}
+              
                 <Button
                   onClick={() => handleServiceClick('autoembed')}
                   variant="contained"

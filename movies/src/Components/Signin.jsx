@@ -8,14 +8,15 @@ const checkTokenExpiration = () => {
   if (!token) return false;
 
   try {
-    const decodedToken = jwtDecode(token);  // Decode the JWT token
-    const currentTime = Date.now() / 1000;  // Current time in seconds
+    const decodedToken = jwtDecode(token); 
+    const currentTime = Date.now() / 1000;  
     if (decodedToken.exp < currentTime) {
-      // Token has expired
-      localStorage.removeItem('token');  // Remove expired token
+  
+      localStorage.removeItem('token'); 
+      localStorage.removeItem('user data');
       return false;
     }
-    return true;  // Token is still valid
+    return true;  
   } catch (error) {
     console.error("Error decoding token:", error);
     return false;
@@ -43,10 +44,10 @@ const Signin = () => {
     });
 
     const data = await response.json();
-    console.log(data);
+    console.log(data+" pls");
     if (response.ok) {
       localStorage.setItem('token', data.token);
-
+      localStorage.setItem('user data', JSON.stringify(data.user));
       navigate('/');
     } else {
       alert(data.error);

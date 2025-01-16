@@ -28,7 +28,7 @@ const Watched = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming JWT token in localStorage
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
                     }
                 });
 
@@ -59,7 +59,7 @@ const Watched = () => {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming JWT token in localStorage
+                    'Authorization': `Bearer ${localStorage.getItem('token')}` 
                 }
             });
 
@@ -67,7 +67,7 @@ const Watched = () => {
                 throw new Error('Failed to remove movie from watched');
             }
 
-            // Update the watchlist locally after successful removal
+         
             setWatched((prevWatched) => prevWatched.filter((movie) => movie.id !== movieId));
             handleSnackbarOpen('Movie removed from watched');
         } catch (error) {

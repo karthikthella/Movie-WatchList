@@ -13,7 +13,7 @@ const Main = ({ onSearch }) => {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       onSearch(searchText);
-      console.log('User input:', searchText); // Perform action on Enter
+      console.log('User input:', searchText); 
       navigate('/movielist');
     }
   };

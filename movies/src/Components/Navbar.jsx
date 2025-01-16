@@ -5,6 +5,7 @@ import { Videocam as VideocamIcon, Menu as MenuIcon, Person as PersonIcon } from
 
 const Navbar = () => {
     const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user data'));
     const navigate = useNavigate();
     const [userAnchorEl, setUserAnchorEl] = useState(null);
 
@@ -13,6 +14,7 @@ const Navbar = () => {
     const handleClickWatched = () => navigate("/watched");
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('user data');
         navigate('/');
         handleCloseUserMenu();
     };
@@ -41,6 +43,7 @@ const Navbar = () => {
                                 <PersonIcon />
                             </IconButton>
                             <Menu anchorEl={userAnchorEl} open={Boolean(userAnchorEl)} onClose={handleCloseUserMenu}>
+                                <MenuItem>&nbsp;{user.username}&nbsp;</MenuItem> 
                                 <MenuItem onClick={handleClickWatchlist}>Watchlist</MenuItem>
                                 <MenuItem onClick={handleClickWatched}>Watched</MenuItem>
                                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
