@@ -19,13 +19,14 @@ You can explore the live application here: [watchnow-movies.netlify.app](https:/
 
 ## Technologies Used
 
-- **Frontend**: React, React Router, Axios
+- **Frontend**: React, React Router
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Token)
 - **AI Integration**: Gemini for personalized movie recommendations
 - **API Integration**: External Movies API to find streaming services
 - **Deployment**: Netlify (Frontend) and Vercel (Backend)
+
 
 
 
