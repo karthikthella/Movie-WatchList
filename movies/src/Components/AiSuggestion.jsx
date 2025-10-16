@@ -25,13 +25,17 @@ const AiSuggestion = () => {
   const generateContent = async () => {
     setLoading(true);
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GENAIAPI_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    
+  
+
 
     const { genre, actor, year } = filters;
-    let prompt = `Generate a list of ${genre || "all"} movies`;
+    let prompt = `List ${genre || "all"} movies`;
     if (actor) prompt += ` starring ${actor}`;
-    if (year) prompt += ` after ${year}`;
-    prompt += " with releasing year.";
+    if (year) prompt += ` released after ${year}`;
+
+    prompt += `. Provide the output as a list separated by newlines. Each line must strictly follow the format: 'Movie Name (YYYY)'. Do not include any headers, numbering, or introductory text.`;
 
     try {
       const result = await model.generateContent(prompt);
@@ -67,6 +71,7 @@ const AiSuggestion = () => {
       const movie = movie1.replace(/^[\d\*\-]+\.\s*/, '');
       const [movieName, year] = movie.split('(');
       const cleanedYear = year ? year.replace(')', '').trim() : null;
+      console.log(cleanedYear);
       if (cleanedYear) {
         return (
           <div key={index}>
